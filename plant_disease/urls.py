@@ -1,8 +1,10 @@
 from django.urls import path
 from . import views
-from  plant_disease.view import TypeView, plantView, MaladieView, pestView , TraitementView , DiagnosticView ,  causeView 
 
-
+from  plant_disease.view import TypeView, plantView, MaladieView, pestView , TraitementView, causeView, ControlProductView, symptomeView, preventionView, chatbotView , DiagnosticView 
+from accounts import views as accounts_views
+from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from .views import dashboard_view
 from django.conf import settings
 from django.conf.urls.static import static
@@ -52,7 +54,7 @@ urlpatterns = [
 
       # Cause URLs
 
-     path('causes_maladie/', causeView.CauseMaladieListView.as_view(), name='cause_maladie-list'),
+    path('causes_maladie/', causeView.CauseMaladieListView.as_view(), name='cause_maladie-list'),
     path('causes_maladie/<int:pk>/', causeView.CauseMaladieDetailView.as_view(), name='cause_maladie-detail'),
     path('causes_maladie/create/', causeView.CauseMaladieCreateView.as_view(), name='cause_maladie-create'),
     path('causes_maladie/<int:pk>/update/', causeView.CauseMaladieUpdateView.as_view(), name='cause_maladie-update'),
@@ -63,12 +65,34 @@ urlpatterns = [
     path('traitements/create/', TraitementView.TraitementCreateView.as_view(), name='traitement-create'),
     path('traitements/update/<int:pk>/', TraitementView.TraitementUpdateView.as_view(), name='traitement-update'),
     path('traitements/delete/<int:pk>/', TraitementView.TraitementDeleteView.as_view(), name='traitement-delete'),
-
- path('', DiagnosticView.DiagnosticListView.as_view(), name='diagnostic-list'),
+     # URLs for Diagnostic
+    path('diagnostics/', DiagnosticView.DiagnosticListView.as_view(), name='diagnostic-list'),
     path('diagnostic/<int:pk>/', DiagnosticView.DiagnosticDetailView.as_view(), name='diagnostic-detail'),
     path('diagnostic/create/', DiagnosticView.DiagnosticCreateView.as_view(), name='diagnostic-create'),
     path('diagnostic/<int:pk>/update/', DiagnosticView.DiagnosticUpdateView.as_view(), name='diagnostic-update'),
     path('diagnostic/<int:pk>/delete/', DiagnosticView.DiagnosticDeleteView.as_view(), name='diagnostic-delete'),
+     # URLs for Symptôme
+    path('symptomes/', symptomeView.SymptomeListView.as_view(), name='symptome-list'),  # Corrected: Use .as_view()
+    path('symptomes/<int:pk>/', symptomeView.SymptomeDetailView.as_view(), name='symptome-detail'),  # Detail view
+    path('symptomes/add/', symptomeView.SymptomeCreateView.as_view(), name='symptome-create'),  # Create view
+    path('symptomes/<int:pk>/edit/', symptomeView.SymptomeUpdateView.as_view(), name='symptome-update'),  # Update view
+    path('symptomes/<int:pk>/delete/', symptomeView.SymptomeDeleteView.as_view(), name='symptome-delete'),  # Delete view
+  # URLs for Prevention
+    path('preventions/', preventionView.PreventionListView.as_view(), name='prevention-list'),  # List view
+    path('preventions/<int:pk>/', preventionView.PreventionDetailView.as_view(), name='prevention-detail'),  # Detail view
+    path('preventions/add/', preventionView.PreventionCreateView.as_view(), name='prevention-create'),  # Create view
+    path('preventions/<int:pk>/edit/', preventionView.PreventionUpdateView.as_view(), name='prevention-update'),  # Update view
+    path('preventions/<int:pk>/delete/', preventionView.PreventionDeleteView.as_view(), name='prevention-delete'),  # Delete view
+
+    
+    path('chatbot/', chatbotView.chat_interface, name='chat_interface'),  # GET request for the chat interface
+    path('chatbot/api/', chatbotView.chat, name='chatbot_api'),  # POST request for handling chat messages
+
+    #*********user*************
+     path('register/', accounts_views.register, name='register'),
+    path('login/', auth_views.LoginView.as_view(template_name='accounts/login.html', next_page='backoffice'), name='login'),
+    path('logout_client/', auth_views.LogoutView.as_view(template_name='accounts/logout.html'), name='logout_client'),
+
 
 ]
 
