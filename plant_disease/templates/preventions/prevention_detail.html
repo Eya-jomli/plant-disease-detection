@@ -1,10 +1,9 @@
 {% include "../navbackoffice.html" %}
 <div class="container my-5">
     <div class="row">
-      <div class="col-md-8 offset-md-2">
+    <div class="col-md-8 offset-md-2">
     <h1>Détails de la Mesure Préventive</h1>
-    <h2><strong>Nom:</strong> {{ prevention.nom }}</h2>
-    
+    <h2><strong>Nom:</strong> {{ prevention.nom }}</h2>   
     <p><strong>Description:</strong> {{ prevention.description }}</p>
     <p><strong>Symptômes Connexes:</strong> 
         {% if prevention.symptômes_connexes %}
@@ -13,10 +12,9 @@
             Aucun symptôme connexe
         {% endif %}
     </p>
-
     <a href="{% url 'prevention-update' prevention.pk %}" class="btn btn-primary">Modifier</a>
     <a href="{% url 'prevention-list' %}" class="btn btn-secondary">Retour à la liste</a>
-    <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ prevention.pk }}">Supprimer</button>
+    <!-- <button class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{ prevention.pk }}">Supprimer</button> -->
 
     <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteModal{{ prevention.pk }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ prevention.pk }}" aria-hidden="true">

@@ -37,7 +37,12 @@ class TypePlanteListView(ListView):
     template_name = 'type_plante/typeplante_list.html'
     context_object_name = 'plantes'
 
-
+# Liste des types de plantes (Read - List)
+class TypePlanteListViewFront(ListView):
+    model = TypePlante
+    template_name = 'type_plante/indexFront.html'
+    context_object_name = 'plantes'
+    
 # Détails d'un type de plante (Read - Detail)
 class TypePlanteDetailView(DetailView):
     model = TypePlante

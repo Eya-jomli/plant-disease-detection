@@ -16,12 +16,14 @@ urlpatterns = [
     # *************
 
     path('typePlantes/', TypeView.TypePlanteListView.as_view(), name='typePlantes-list'),
+    path('typePlantes/front', TypeView.TypePlanteListViewFront.as_view(), name='typePlantes-list-front'),
     path('typePlantes/<int:pk>/', TypeView.TypePlanteDetailView.as_view(), name='typePlantes-detail'),
     path('typePlantes/create/', TypeView.TypePlanteCreateView.as_view(), name='typePlantes-create'),
     path('typePlantes/<int:pk>/update/', TypeView.TypePlanteUpdateView.as_view(), name='typePlantes-update'),
     path('typePlantes/<int:pk>/delete/', TypeView.TypePlanteDeleteView.as_view(), name='typePlantes-delete'),
 
     #**********************
+    path('plantes/type/<int:type_plante_id>/', plantView.plantes_by_type, name='plantes-by-type'),
     path('plantes/', plantView.PlanteListView.as_view(), name='plante-list'),
     path('plantes/<int:pk>/', plantView.PlanteDetailView.as_view(), name='plante-detail'),
     path('plantes/create/', plantView.PlanteCreateView.as_view(), name='plante-create'),

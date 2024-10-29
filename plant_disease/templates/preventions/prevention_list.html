@@ -4,7 +4,7 @@
       <div class="col-md-8 offset-md-2">
     <h2>Liste des Mesures Préventives</h2>
     <a href="{% url 'prevention-create' %}" class="btn btn-success mb-3">Ajouter une nouvelle mesure</a>
-    <table class="table table-striped">
+    <table class="table ">
         <thead>
             <tr>
                 <th>Nom</th>
@@ -18,9 +18,9 @@
                     <td>{{ prevention.nom }}</td>
                     <td>{{ prevention.description|truncatewords:10 }}</td>
                     <td>
-                        <a href="{% url 'prevention-detail' prevention.pk %}" class="btn btn-info btn-sm">Détails</a>
-                        <a href="{% url 'prevention-update' prevention.pk %}" class="btn btn-primary btn-sm">Modifier</a>
-                        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal{{ prevention.pk }}">
+                        <a href="{% url 'prevention-detail' prevention.pk %}" class="btn btn-info">Voir</a>
+                        <a href="{% url 'prevention-update' prevention.pk %}" class="btn btn-warning">Modifier</a>
+                        <button class="btn btn-danger"  data-toggle="modal" data-target="#deleteModal{{ prevention.pk }}">
                             Supprimer
                         </button>
 
