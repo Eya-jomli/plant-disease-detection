@@ -30,6 +30,66 @@
 
     <!-- Template Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
+    <style>
+        .team-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 400px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        .team-item:hover {
+            transform: scale(1.05);
+        }
+    
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    
+        .modal-body img {
+            max-height: 300px;
+            object-fit: cover;
+            margin: 0 auto;
+            border-radius: 10px;
+        }
+    
+        .btn-primary, .btn-secondary {
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: background-color 0.3s;
+        }
+    
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+    
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+    
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+    
+    
+    
 </head>
 
 <body>
@@ -42,20 +102,48 @@
 
     {% include 'navbar.html' %}  <!-- Include the navbar here -->
     <div class="row g-4">
+        <div class="text-center my-5">
+            <h1 class="display-4 font-weight-bold">Les Types de Plantes</h1>
+        </div>
+        
         {% for plante in plantes %}
-       
-        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter|add:1 }}s">
-            <div class="team-item rounded">
-                <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3 d-block mx-auto" style="max-height: 200px;">
-                <div class="team-text text-center">
-                    <h4 class="mb-0">{{ plante.nom }}</h4>
-                    <p class="text-primary">{{ plante.description }}</p>
+            <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter|add:1 }}s">
+                <div class="team-item rounded">
+                    <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3 d-block mx-auto card-img-top">
+                    <div class="team-text text-center">
+                        <h4 class="mb-0">{{ plante.nom }}</h4>
+                        <p class="text-primary">{{ plante.description }}</p>
+                    </div>
+                </div>
+    
+                <div class="text-center mt-3">
+                    <!-- Bouton pour le popup -->
+                    <button class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#modal{{ plante.pk }}">
+                        <i class="fas fa-leaf"></i> Découvrir
+                    </button>
+    
+                    <!-- Bouton pour naviguer vers les informations -->
+                    <a href="/plantes/type/{{ plante.pk }}/" class="btn btn-secondary mt-2">
+                        <i class="fas fa-info-circle"></i> Informations
+                    </a>
                 </div>
             </div>
-           
-            <a href="/plantes/type/{{ plante.pk }}/">go</a>
-        </div>
-
+    
+            <!-- Modal pour les détails -->
+            <div class="modal fade" id="modal{{ plante.pk }}" tabindex="-1" aria-labelledby="modalLabel{{ plante.pk }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalLabel{{ plante.pk }}">{{ plante.nom }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3" style="max-height: 300px; object-fit: cover;">
+                            <p>{{ plante.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </div>
     

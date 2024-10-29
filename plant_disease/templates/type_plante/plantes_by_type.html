@@ -30,6 +30,47 @@
 
     <!-- Template Stylesheet -->
     <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+
+    <style>
+        .team-item {
+            transition: transform 0.3s, box-shadow 0.3s; /* Animation pour l'effet de zoom et l'ombre */
+            background-color: #ffffff; /* Couleur de fond blanche pour les cartes */
+            border-radius: 15px; /* Coins arrondis */
+            overflow: hidden; /* Pour éviter que l'image déborde */
+            text-align: center; /* Centre le texte dans la carte */
+            height: 400px; /* Hauteur fixe pour les cartes */
+        }
+    
+        .team-item:hover {
+            transform: scale(1.05); /* Agrandissement au survol */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Ombre portée au survol */
+        }
+    
+        .card-img-top {
+            max-height: 200px;
+            object-fit: cover; /* Assure que l'image couvre le conteneur */
+            border-radius: 10px; /* Arrondir les coins de l'image */
+        }
+    
+        .text-primary {
+            color: #007bff; /* Couleur primaire */
+            font-weight: 500; /* Poids du texte */
+        }
+    
+        .btn-primary {
+            background-color: #00ff59; /* Couleur primaire */
+            border: none; /* Pas de bordure */
+            padding: 10px 20px; /* Padding pour le bouton */
+            border-radius: 5px; /* Coins arrondis pour le bouton */
+            transition: background-color 0.3s; /* Transition douce */
+        }
+    
+        .btn-primary:hover {
+            background-color: #0056b3; /* Couleur lors du survol */
+        }
+    </style>
+    
 </head>
 
 <body>
@@ -41,21 +82,42 @@
 
     {% include 'navbar.html' %}  <!-- Include the navbar here -->
     
-    <div class="container">
-        <h2>Plantes de type: {{ type_plante.nom }}</h2>
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Plantes de type: {{ type_plante.nom }}</h2>
         <div class="row g-4">
             {% for plante in plantes %}
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter|add:1 }}s">
-                    <div class="team-item rounded">
-                        <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3 d-block mx-auto" style="max-height: 200px;">
+                    <div class="team-item rounded shadow-sm p-4">
+                        <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3 d-block mx-auto card-img-top">
                         <div class="team-text text-center">
                             <h4 class="mb-0">{{ plante.nom }}</h4>
                             <p class="text-primary">{{ plante.description }}</p>
                         </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#planteModal{{ plante.pk }}">
+                                <i class="fas fa-leaf"></i> Découvrir
+                            </button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Modal for Plant Details -->
+                <div class="modal fade" id="planteModal{{ plante.pk }}" tabindex="-1" aria-labelledby="planteModalLabel{{ plante.pk }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="planteModalLabel{{ plante.pk }}">{{ plante.nom }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-center">
+                                <img src="{{ plante.image.url }}" alt="{{ plante.nom }}" class="img-fluid mb-3" style="max-height: 300px; object-fit: cover;">
+                                <p class="text-primary">{{ plante.description }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% empty %}
-                <p>Aucune plante disponible pour ce type.</p>
+                <p class="text-center">Aucune plante disponible pour ce type.</p>
             {% endfor %}
         </div>
     </div>
