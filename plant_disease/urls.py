@@ -21,7 +21,7 @@ urlpatterns = [
     path('typePlantes/create/', TypeView.TypePlanteCreateView.as_view(), name='typePlantes-create'),
     path('typePlantes/<int:pk>/update/', TypeView.TypePlanteUpdateView.as_view(), name='typePlantes-update'),
     path('typePlantes/<int:pk>/delete/', TypeView.TypePlanteDeleteView.as_view(), name='typePlantes-delete'),
-
+    path('generate_description/', TypeView.generate_description, name='generate-description'), 
     #**********************
     path('plantes/type/<int:type_plante_id>/', plantView.plantes_by_type, name='plantes-by-type'),
     path('plantes/', plantView.PlanteListView.as_view(), name='plante-list'),

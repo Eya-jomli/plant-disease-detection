@@ -27,6 +27,7 @@ def generate_description(request):
             description = ai_generate_description(nom)
             return JsonResponse({'description': description})
         except Exception as e:
+            logger.error("Error generating description: %s", str(e))
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'error': 'Invalid Request'}, status=400)
 
